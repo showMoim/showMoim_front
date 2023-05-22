@@ -12,7 +12,6 @@ function Login() {
         setPassword(e.currentTarget.value);
     }
     const onSubmitHandler = (e) => {
-        // 버튼만 누르면 리로드 되는것을 막아줌
         e.preventDefault();
 
         console.log('email: ', email);
@@ -51,7 +50,6 @@ function Login() {
         // }
     }
 
-    
     return (
         <div style={{ 
             display: 'flex', justifyContent: 'center', alignItems: 'center', 
