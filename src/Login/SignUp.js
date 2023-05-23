@@ -8,11 +8,35 @@ function SignUp() {
     const [name, setName] = useState("");
 
     const [chkEmail, setChkEmail] = useState(false);
+    const [chkCode, setChkCode] = useState(false);
     const [chkPassword, setChkPassword] = useState(false);
     const [chkInfo, setChkInfo] = useState(false);
 
     const onEmailHandler = (e) => {
         setEmail(e.currentTarget.value);
+    }
+
+    //인증 유효 시간 넣어야 될거같음
+    const onAuthHandler = (e) => {
+        
+        setChkCode(true); //일단은 임시로
+        // fetch("/auth", {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         email: email,
+        //     }).then(res => res.json())
+        //         .then(response => {
+        //             if(response.Authorization == null) {
+        //                 alert("인증에 실패하였습니다. 다시 시도 해주세요.")
+        //             }
+                    
+        //             //setChkCode(true);
+        //         })
+
+        // })
     }
 
     const onCodeHandler = (e) => {
@@ -35,10 +59,10 @@ function SignUp() {
         {chkEmail == false && chkPassword == false && chkInfo == false &&
         <div>
             이메일<br/>
-            <input type='text' onChange={onEmailHandler} value={email} placeholder="이메일을 입력해주세요."></input>@bccard.com <button>번호 요청</button><br/>
+            <input type='text' onChange={onEmailHandler} value={email} placeholder="이메일을 입력해주세요."></input>@bccard.com <button onClick={onAuthHandler}>번호 요청</button><br/>
             인증코드<br/>
             <input type='text' onChange={onCodeHandler} value={code} placeholder="인증코드를 입력해주세요."></input><br/>
-            <button onClick={()=>{console.log("이메일 작성 완료"); setChkEmail(true);}} disabled={email.length < 1 || code.length < 1}> 다음 </button>
+            <button onClick={()=>{console.log("이메일 작성 완료"); setChkEmail(true);}} disabled={email.length < 1 || code.length < 1 || chkCode == false}> 다음 </button>
         </div>
         }
         {chkEmail == true && chkPassword == false && chkInfo == false &&
