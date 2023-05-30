@@ -19,7 +19,7 @@ function SignUp() {
 
     //인증 유효 시간 넣어야 될거같음
     const onAuthHandler = (e) => {
-        
+
         setChkCode(true); //일단은 임시로
         // fetch("/auth", {
         //     method: 'POST',
@@ -33,7 +33,7 @@ function SignUp() {
         //             if(response.Authorization == null) {
         //                 alert("인증에 실패하였습니다. 다시 시도 해주세요.")
         //             }
-                    
+
         //             //setChkCode(true);
         //         })
 
@@ -49,17 +49,20 @@ function SignUp() {
 
     const onConPasswordHandler = (e) => {
         setConPassword(e.currentTarget.value);
-        if(password === conPassword) {
-            setChkPassword(true);
-        } else {
-            setChkPassword(false);
-        }
-
-        console.log("chkpassword : " + chkPassword )
     }
 
     const onInfoHandler = (e) => {
         setName(e.currentTarget.value);
+    }
+
+    // 비밀번호가 유효한지 체크하는 로직
+    const checkValidPassword = (_password, _conPassword) => {
+        // 비밀번호 길이가 1 이상
+        if (!_password || !_conPassword) return false;
+        // 비밀번호가 동일
+        if (_password !== _conPassword) return false;
+
+        return true;
     }
 
     return (
@@ -79,10 +82,22 @@ function SignUp() {
             <input type='password' onChange={onPasswordHandler} value={password} placeholder="비밀번호를 입력해주세요."></input><br/>
             비밀번호 확인<br/>
             <input type='password' onChange={onConPasswordHandler} value={conPassword} placeholder="인증코드를 입력해주세요."></input><br/>
-            {conPassword > 0 && password != conPassword && (
-            <span className=''>비밀번호가 일치하지 않습니다.</span>
+            {conPassword && !checkValidPassword(password, conPassword) && (
+            <span className={`${!checkValidPassword(password, conPassword) ? 'messsage' : ''}`}>비밀번호가 일치하지 않습니다.</span>
           )}<br/>
-            <button onClick={()=>{if(!chkPassword) { return false;} console.log("비밀번호 작성 완료");}} disabled={password.length < 1 || conPassword.length < 1 || chkPassword == false}> 다음 </button>
+            <button
+                onClick={()=>{
+                    // 비밀번호 체크해서 맞으면 chkPassword 를 true 로
+                    if(checkValidPassword(password, conPassword)) {
+                        console.log("비밀번호 작성 완료");
+                        // 버튼 안눌렀는데 화면 넘어가고 그랬던건
+                        // setChkPassword(true) 가 onChange 에 있었어서
+                        // 백스페이스나 키보드 입력했을때 화면이 넘어갔던거임~
+                        // (밑에서 chkPassword 플래그를 보고 화면을 전환하니까)
+                        setChkPassword(true);
+                    }
+                }}
+                disabled={!checkValidPassword(password, conPassword)}> 다음 </button>
         </div>
         }
         {chkEmail == true && chkPassword == true && chkInfo == false &&
