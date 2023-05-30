@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../css/Login.css';
 
 function SignUp() {
     const [email, setEmail] = useState("");
@@ -48,6 +49,13 @@ function SignUp() {
 
     const onConPasswordHandler = (e) => {
         setConPassword(e.currentTarget.value);
+        if(password === conPassword) {
+            setChkPassword(true);
+        } else {
+            setChkPassword(false);
+        }
+
+        console.log("chkpassword : " + chkPassword )
     }
 
     const onInfoHandler = (e) => {
@@ -62,7 +70,7 @@ function SignUp() {
             <input type='text' onChange={onEmailHandler} value={email} placeholder="이메일을 입력해주세요."></input>@bccard.com <button onClick={onAuthHandler}>번호 요청</button><br/>
             인증코드<br/>
             <input type='text' onChange={onCodeHandler} value={code} placeholder="인증코드를 입력해주세요."></input><br/>
-            <button onClick={()=>{console.log("이메일 작성 완료"); setChkEmail(true);}} disabled={email.length < 1 || code.length < 1 || chkCode == false}> 다음 </button>
+            <button onClick={()=>{console.log("이메일 작성 완료"); setChkEmail(true); /* 인증코드 확인 필요 */ }} disabled={email.length < 1 || code.length < 1 || chkCode == false}> 다음 </button>
         </div>
         }
         {chkEmail == true && chkPassword == false && chkInfo == false &&
@@ -71,7 +79,10 @@ function SignUp() {
             <input type='password' onChange={onPasswordHandler} value={password} placeholder="비밀번호를 입력해주세요."></input><br/>
             비밀번호 확인<br/>
             <input type='password' onChange={onConPasswordHandler} value={conPassword} placeholder="인증코드를 입력해주세요."></input><br/>
-            <button onClick={()=>{console.log("비밀번호 작성 완료"); setChkPassword(true);}} disabled={password.length < 1 || conPassword.length < 1 || password != conPassword}> 다음 </button>
+            {conPassword > 0 && password != conPassword && (
+            <span className={`${chkPassword ? 'messsage' : ''}`}>비밀번호가 일치하지 않습니다.</span>
+          )}<br/>
+            <button onClick={()=>{if(!chkPassword) { return false;} console.log("비밀번호 작성 완료");}} disabled={password.length < 1 || conPassword.length < 1 || chkPassword == false}> 다음 </button>
         </div>
         }
         {chkEmail == true && chkPassword == true && chkInfo == false &&
