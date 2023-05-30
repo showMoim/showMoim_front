@@ -80,7 +80,7 @@ function SignUp() {
             비밀번호 확인<br/>
             <input type='password' onChange={onConPasswordHandler} value={conPassword} placeholder="인증코드를 입력해주세요."></input><br/>
             {conPassword > 0 && password != conPassword && (
-            <span className={`${!chkPassword ? 'message' : ''}`}>비밀번호가 일치하지 않습니다.</span>
+            <span className=''>비밀번호가 일치하지 않습니다.</span>
           )}<br/>
             <button onClick={()=>{if(!chkPassword) { return false;} console.log("비밀번호 작성 완료");}} disabled={password.length < 1 || conPassword.length < 1 || chkPassword == false}> 다음 </button>
         </div>
