@@ -1,35 +1,26 @@
-import logo from './logo.svg';
-import { Route, Routes, Redirect} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Login/Login';
 import SignUp from './Login/SignUp';
+import Main from './Main/Main';
 import './App.css';
 
 function App() {
+  const isLogin = false;
+
   return (
+    <Router>
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/Login" element={<Login />} />
       <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/Main" element={<Main />} />
+      <Route path="/" render={() => (isLogin ? <Navigate to="/Main" /> : <Navigate to="/Login" />)} />
       {/* <Route
           path="/login"
           render={() => (isLogin ? <Redirect to="/" /> : <Login />)}
       /> */}
     </Routes>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
+    </Router>
   );
 }
 
