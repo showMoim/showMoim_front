@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Modal from '../Common/Modal';
 import '../css/Login.css';
 
 function Login() {
+    const [modalVisible, setModalVisible] = useState(false)
+    const openModal = () => {
+        setModalVisible(true)
+    }
+    const closeModal = () => {
+        setModalVisible(false)
+    }
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -65,7 +73,9 @@ function Login() {
                     </div>
                     </form>
                     <div className="w-3/4 mt-3 mb-3">
-                        <button type="submit" disabled={email.length < 1 || password.length < 1} formAction='' className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button>
+                        {/* <button type="submit" disabled={email.length < 1 || password.length < 1} formAction='' className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button> */}
+                        <button onClick={openModal} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button>
+                        {modalVisible && <Modal closeModal={closeModal}></Modal>}
                     </div>
                     <div className="w-3/4 flex flex-row justify-between">
                         <div className=" flex items-center gap-x-1">
