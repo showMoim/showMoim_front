@@ -35,22 +35,24 @@ function Login() {
             return;
         }
         if(email != "" && password != "") {
-            fetch("/login", {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                }).then(res => res.json())
-                    .then(response => {
-                        if(response.Authorization == null) {
-                            alert("아이디 혹은 비밀번호를 확인해주세요.")
-                        }
-                    })
+            // fetch("/login", {
+            //     method: 'POST',
+            //     headers: {
+            //         'content-type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         email: email,
+            //         password: password
+            //     }).then(res => res.json())
+            //         .then(response => {
+            //             if(response.Authorization == null) {
+            //                 openModal();
+            //             }
+            //         })
 
-            })
+            // })
+            console.log("ss")
+            openModal();
         }
         
         // let body = {
@@ -71,12 +73,13 @@ function Login() {
                     <div className="mb-3">
                         <input type="password" value={password} onChange={onPasswordHandler} className="w-full py-4 px-4 bg-gray-100 placeholder:font-semibold rounded hover:ring-1 outline-sf-btn-bg" placeholder="비밀번호를 입력해주세요."/>
                     </div>
-                    </form>
-                    <div className="w-3/4 mt-3 mb-3">
-                        {/* <button type="submit" disabled={email.length < 1 || password.length < 1} formAction='' className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button> */}
-                        <button onClick={openModal} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button>
+                    
+                    <div className="w-full mt-3 mb-3">
+                        <button type="submit" disabled={email.length < 1 || password.length < 1} formAction='' className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button>
+                        {/* <button onClick={openModal} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button> */}
                         {modalVisible && <Modal closeModal={closeModal}></Modal>}
                     </div>
+                    </form>
                     <div className="w-3/4 flex flex-row justify-between">
                         <div className=" flex items-center gap-x-1">
                             {/* <input type="checkbox" className=" w-4 h-4 sf-btn-bg" />
