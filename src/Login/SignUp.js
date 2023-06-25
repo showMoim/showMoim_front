@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 import "../css/Login.css";
 
 function SignUp() {
+  const authContext = useAuth()
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [email, setEmail] = useState("");
@@ -10,13 +13,14 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [conPassword, setConPassword] = useState("");
   const [name, setName] = useState("");
+ 
 
   const [chkEmail, setChkEmail] = useState(false);
   const [chkCode, setChkCode] = useState(false);
   const [chkPassword, setChkPassword] = useState(false);
   const [chkInfo, setChkInfo] = useState(false);
 
-  const authCode = "1234";
+  const authCode = "123456";
   const navigate = useNavigate();
 
   // useEffect(() => {
@@ -72,9 +76,17 @@ function SignUp() {
   const checkValidPassword = (pwd, conPwd) => {
     if (!pwd || !conPwd) return false;
     if (pwd !== conPwd) return false;
+
     return true;
   };
 
+  async function onSignUp(){
+    if(await authContext.signUp(email, code,name, password, conPassword)){
+      navigate("/Main");
+    }else{
+      console.log("회원가입 실패!!!")
+    }
+  }
   return (
     <div className="bg-gray-10 flex items-center justify-center p-12">
         <div className="w-full flex flex-col ">
@@ -117,6 +129,7 @@ function SignUp() {
                   if (checkValidPassword(password, conPassword)) {
                     console.log("비밀번호 작성 완료");
                     setChkPassword(true);
+                    onSignUp()
                     if(searchParams.get("cmd") === "findpw") {
                         navigate("/Login");
                     }
@@ -136,7 +149,6 @@ function SignUp() {
                   onClick={() => {
                     console.log("정보 작성 완료");
                     setChkInfo(true);
-                    navigate("/Main");
                   }}
                   disabled={name.length < 1} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400" >완료</button>
             </div>
