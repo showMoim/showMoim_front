@@ -33,6 +33,7 @@ function SignUp() {
 
   //인증 유효 시간 넣어야 될거같음
   const onAuthHandler = (e) => {
+    onEmailVerifyRequest(email);
     // fetch("/auth", {
     //     method: 'POST',
     //     headers: {
@@ -86,6 +87,14 @@ function SignUp() {
     }else{
       console.log("회원가입 실패!!!")
     }
+  }
+
+  async function onEmailVerifyRequest(email : String){
+
+    if(await authContext.emailVerifyRequest(email)){
+      setChkEmail(true)
+    }
+
   }
   return (
     <div className="bg-gray-10 flex items-center justify-center p-12">
