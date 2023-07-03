@@ -82,7 +82,7 @@ function SignUp() {
 
   async function onSignUp(){
     if(await authContext.signUp(email, code,name, password, conPassword)){
-      navigate("/Main");
+      navigate("/Login");
     }else{
       console.log("회원가입 실패!!!")
     }
