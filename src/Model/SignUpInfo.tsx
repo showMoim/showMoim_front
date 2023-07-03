@@ -1,4 +1,4 @@
-class SignUpInfo{
+export class SignUpInfo{
 
     private email:String;
     private code:String;

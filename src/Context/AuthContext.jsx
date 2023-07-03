@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import { executeSignUpMemberService } from "../Api/MemberApiService";
-import SignUpInfo from "../Model/SignUpInfo";
+import { SignUpInfo }from "../Model/SignUpInfo";
 export const AuthContext = createContext()
-
+ 
 export const useAuth = () => useContext(AuthContext)
 
 export default function AuthProvider({children}){
@@ -11,7 +11,7 @@ export default function AuthProvider({children}){
 
     async function signUp(email, code, nickname, password, passwordConfirm){
 
-        const memberInfo = new SignUpInfo(email, code, nickname, password, passwordConfirm);
+        let memberInfo = new SignUpInfo(email, code, nickname, password, passwordConfirm);
  
         const response = await executeSignUpMemberService(memberInfo)
 
