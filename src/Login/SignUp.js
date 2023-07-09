@@ -33,6 +33,8 @@ function SignUp() {
 
   //인증 유효 시간 넣어야 될거같음
   const onAuthHandler = (e) => {
+    
+    authContext.emailVerifyRequest(email);
     // fetch("/auth", {
     //     method: 'POST',
     //     headers: {
@@ -67,10 +69,9 @@ function SignUp() {
     setName(e.currentTarget.value);
   };
 
-  const checkValidEmail = (code) => {
-    if (!code || !authCode) return false;
-    if (code !== authCode) return false;
-    return true;
+  async function checkValidEmail(code){
+    setCode(code)
+    return await authContext.emailVerify(email, code)
   };
 
   const checkValidPassword = (pwd, conPwd) => {
@@ -86,6 +87,14 @@ function SignUp() {
     }else{
       console.log("회원가입 실패!!!")
     }
+  }
+
+  async function onEmailVerifyRequest(email : String){
+
+    if(await authContext.emailVerifyRequest(email)){
+      setChkEmail(true)
+    }
+
   }
   return (
     <div className="bg-gray-10 flex items-center justify-center p-12">
@@ -110,7 +119,7 @@ function SignUp() {
                                             setChkEmail(true);
                                         }
                                     }}
-                disabled={email.length < 1 || !checkValidEmail(code)} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">다음</button>
+                disabled={code.length < 6} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">다음</button>
             </div>
           )}
           {chkEmail == true && chkPassword == false && chkInfo == false && (
