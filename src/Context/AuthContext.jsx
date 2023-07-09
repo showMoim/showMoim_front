@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { executeSignUpMemberService } from "../Api/MemberApiService";
+import { executeEmailVerifyRequestService, executeSignUpMemberService } from "../Api/MemberApiService";
 import { SignUpInfo }from "../Model/SignUpInfo";
 export const AuthContext = createContext()
  
@@ -26,7 +26,21 @@ export default function AuthProvider({children}){
         return false
     }
 
-    return <AuthContext.Provider value = {{signUp, username}}>
+    async function emailVerifyRequest(email){
+        
+        const response = await executeEmailVerifyRequestService({email})
+
+        if(response.status==200){
+            console.log("이메일 인증 요청 성공")
+            return true
+        }
+        console.log("이메일 인증 요청 실패")
+        
+        return false
+    }
+        
+
+    return <AuthContext.Provider value = {{signUp, emailVerifyRequest, username}}>
         {children}
     </AuthContext.Provider>
 }

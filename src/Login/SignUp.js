@@ -33,6 +33,8 @@ function SignUp() {
 
   //인증 유효 시간 넣어야 될거같음
   const onAuthHandler = (e) => {
+    
+    authContext.emailVerifyRequest(email);
     // fetch("/auth", {
     //     method: 'POST',
     //     headers: {
