@@ -100,7 +100,7 @@ function Login() {
                     <div className="w-full mt-3 mb-3">
                         <button type="submit" disabled={email.length < 1 || password.length < 1} formAction='' className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button>
                         {/* <button onClick={openModal} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400"> 로그인 </button> */}
-                        {modalVisible && <Modal closeModal={closeModal} title="로그인 정보 불일치" content="아이디와 비밀번호가 일치하지 않습니다."></Modal>}
+                        {modalVisible && <Modal closeModal={closeModal}></Modal>}
                     </div>
                     </form>
                     <div className="w-3/4 flex flex-row justify-between">

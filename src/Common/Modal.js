@@ -15,8 +15,8 @@ const Modal = (props) => {
    <div className="">
      
      <div className="text-center flex-auto justify-center">
-            <h2 className="text-xl font-bold py-4 ">{props.title}</h2>
-            <p className="text-sm text-gray-500 px-8 display-linebreak">{props.content /* 개행 처리 해야함 */}</p>
+            <h2 className="text-xl font-bold py-4 ">로그인 정보 불일치</h2>
+            <p className="text-sm text-gray-500 px-8 display-linebreak">아이디와 비밀번호 확인 후<br />다시 입력해주세요.</p>    
      </div>
      
      <div className="p-3  mt-2 text-center space-x-4 md:block">
