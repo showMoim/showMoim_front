@@ -7,3 +7,5 @@ export const executeEmailVerifyRequestService = (email : {email : String}) => ap
 
 export const executeEmailVerifyService = (emailVerifyInfo : {email : String, code : String}) => apiClient.post('/api/member/join/email/verify', emailVerifyInfo)
 
+export const executeLoginVerifyService = (loginVerifyInfo : {email : String, password : String}) => apiClient.post('/api/member/login', loginVerifyInfo)
+

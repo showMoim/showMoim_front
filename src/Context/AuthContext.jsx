@@ -67,6 +67,19 @@ export default function AuthProvider({children}){
 
         return false
     }
+
+    async function loginVerify(email, password){
+
+        const response = await executeLoginVerifyService({email, password})
+
+        if(response.status === 200){
+            console.log("로그인 성공");
+            console.log(response);
+            return true
+        }
+
+        return false
+    }
     
 
         

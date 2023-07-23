@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../Context/AuthContext";
 import Modal from '../Common/Modal';
 import '../css/Login.css';
 
 function Login() {
-    const [modalVisible, setModalVisible] = useState(false)
+    const authContext = useAuth();
+    
+    const [modalVisible, setModalVisible] = useState(false);
     const openModal = () => {
         setModalVisible(true)
     }
@@ -20,7 +23,7 @@ function Login() {
     const onPasswordHandler = (e) => {
         setPassword(e.currentTarget.value);
     }
-    const onSubmitHandler = (e) => {
+    async function onSubmitHandler() {
         e.preventDefault();
 
         console.log('email: ', email);
@@ -35,6 +38,10 @@ function Login() {
             return;
         }
         if(email != "" && password != "") {
+            if(await authContext.loginVerify(email, password)) {
+
+            }
+            
             // fetch("/login", {
             //     method: 'POST',
             //     headers: {
