@@ -13,9 +13,7 @@ apiClient.interceptors.response.use(
         return response;
     },
     error => {
-        if(error.response.status === Status.SERVER_ERROR){
-            console.log("서버 에러");
-        }
+        //error state 설정
         return error.response;
     }
 )
