@@ -13,8 +13,8 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [conPassword, setConPassword] = useState("");
   const [name, setName] = useState("");
- 
 
+  const [emailRequested, setEmailRequested] = useState(false);
   const [chkEmail, setChkEmail] = useState(false);
   const [chkCode, setChkCode] = useState(false);
   const [chkPassword, setChkPassword] = useState(false);
@@ -34,22 +34,12 @@ function SignUp() {
   //인증 유효 시간 넣어야 될거같음
   const onAuthHandler = (e) => {
     
-    authContext.emailVerifyRequest(email);
-    // fetch("/auth", {
-    //     method: 'POST',
-    //     headers: {
-    //         'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         email: email,
-    //     }).then(res => res.json())
-    //         .then(response => {
-    //             if(response.Authorization == null) {
-    //                 alert("인증에 실패하였습니다. 다시 시도 해주세요.")
-    //             }
-    //             //setChkCode(true);
-    //         })
-    // })
+    if(authContext.emailVerifyRequest(email)){
+      //이메일 요청 성공했을경우 
+      setEmailRequested(true);
+    }else{
+      //이메일 요청 실패, 모달창 띄우기
+    }
   };
 
   const onCodeHandler = (e) => {
@@ -119,7 +109,7 @@ function SignUp() {
                                             setChkEmail(true);
                                         }
                                     }}
-                disabled={code.length < 6} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">다음</button>
+                disabled={code.length < 6 || !emailRequested} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">다음</button>
             </div>
           )}
           {chkEmail == true && chkPassword == false && chkInfo == false && (
