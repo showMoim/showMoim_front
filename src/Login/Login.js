@@ -23,8 +23,8 @@ function Login() {
     const onPasswordHandler = (e) => {
         setPassword(e.currentTarget.value);
     }
-    async function onSubmitHandler() {
-        e.preventDefault();
+    const onSubmitHandler = (e) => {
+        //e.preventDefault();
 
         console.log('email: ', email);
         console.log('password: ', password);
@@ -38,7 +38,9 @@ function Login() {
             return;
         }
         if(email != "" && password != "") {
-            if(await authContext.loginVerify(email, password)) {
+            e.preventDefault();
+
+            if(authContext.loginVerify(email, password)) {
 
             }
             
@@ -82,7 +84,7 @@ function Login() {
             //removeCookie("accessToken");
             //localStorage.removeItem("refreshToken");
 
-            openModal(); //임시로
+            //openModal(); //임시로
         }
         
         // let body = {

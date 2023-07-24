@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { executeSignUpMemberService , executeEmailVerifyRequestService, executeEmailVerifyService} from "../Api/MemberApiService";
+import { executeSignUpMemberService , executeEmailVerifyRequestService, executeEmailVerifyService, executeLoginVerifyService} from "../Api/MemberApiService";
 import { SignUpInfo }from "../Model/SignUpInfo";
 export const AuthContext = createContext()
  
@@ -68,14 +68,17 @@ export default function AuthProvider({children}){
         return false
     }
 
-    async function loginVerify(email, password){
+    function loginVerify(email, password){
 
-        const response = await executeLoginVerifyService({email, password})
+        const response = executeLoginVerifyService({email, password})
 
         if(response.status === 200){
             console.log("로그인 성공");
             console.log(response);
             return true
+        } else {
+            console.log("로그인 실패");
+            console.log(response);
         }
 
         return false
@@ -84,7 +87,7 @@ export default function AuthProvider({children}){
 
         
 
-    return <AuthContext.Provider value = {{signUp, emailVerifyRequest, emailVerify, username}}>
+    return <AuthContext.Provider value = {{signUp, emailVerifyRequest, emailVerify, loginVerify, username}}>
         {children}
     </AuthContext.Provider>
 }
