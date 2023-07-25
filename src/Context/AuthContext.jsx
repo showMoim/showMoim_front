@@ -69,23 +69,17 @@ export default function AuthProvider({children}){
     }
 
     function loginVerify(email, password){
-
+        
         const response = executeLoginVerifyService({email, password})
 
         if(response.status === 200){
             console.log("로그인 성공");
-            console.log(response);
             return true
         } else {
             console.log("로그인 실패");
-            console.log(response);
         }
-
         return false
     }
-    
-
-        
 
     return <AuthContext.Provider value = {{signUp, emailVerifyRequest, emailVerify, loginVerify, username}}>
         {children}
