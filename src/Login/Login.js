@@ -24,17 +24,17 @@ function Login() {
         setPassword(e.currentTarget.value);
     }
     const onSubmitHandler = (e) => {
-        //e.preventDefault();
+        e.preventDefault();
 
-        console.log('email: ', email);
-        console.log('password: ', password);
+        //console.log('email: ', email);
+        //console.log('password: ', password);
 
         if(email == "") {
             alert("이메일을 입력해주세요!");
             return;
         }
-        if(password == "") {
-            alert("비밀번호를 입력해주세요!");
+        if(password.trim().length < 6) {
+            alert("비밀번호를 6자리이상 입력해주세요!");
             return;
         }
         if(email != "" && password != "") {
@@ -42,6 +42,8 @@ function Login() {
 
             if(authContext.loginVerify(email, password)) {
 
+            } else {
+                openModal();
             }
             
             // fetch("/login", {
@@ -65,15 +67,21 @@ function Login() {
 
             // })
 
-            // axios.post('/login', data).then(response => {
-            //     const { accessToken } = response.data.acess_token;
-            //     const { refreshToken } = response.data.refresh_token;
+            // let data = {
+            //     email: email,
+            //     password: password,
+            // }
+
+            // axios.post('http://localhost:8080/api/member/login', data).then(response => {
+            //     console.log(response.status)
+            //     // const { accessToken } = response.data.acess_token;
+            //     // const { refreshToken } = response.data.refresh_token;
 
             //     // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-            //     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+            //     // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         
-            //     setCookie("refreshToken", refreshToken)
-            //     localStorage.setItem("accessToken", accessToken)
+            //     // setCookie("refreshToken", refreshToken)
+            //     // localStorage.setItem("accessToken", accessToken)
         
             // }).catch(error => {
             //     // ... 에러 처리
@@ -86,11 +94,6 @@ function Login() {
 
             //openModal(); //임시로
         }
-        
-        // let body = {
-        //     email: email,
-        //     password: password,
-        // }
     }
 
     return (
