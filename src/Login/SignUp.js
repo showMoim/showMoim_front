@@ -86,6 +86,7 @@ function SignUp() {
       navigate("/Login");
     }else{
       console.log("회원가입 실패!!!")
+      navigate("/Login")
     }
   }
 
@@ -138,7 +139,7 @@ function SignUp() {
                   if (checkValidPassword(password, conPassword)) {
                     console.log("비밀번호 작성 완료");
                     setChkPassword(true);
-                    onSignUp()
+                    
                     if(searchParams.get("cmd") === "findpw") {
                         navigate("/Login");
                     }
@@ -158,6 +159,7 @@ function SignUp() {
                   onClick={() => {
                     console.log("정보 작성 완료");
                     setChkInfo(true);
+                    onSignUp();
                   }}
                   disabled={name.length < 1} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400" >완료</button>
             </div>
