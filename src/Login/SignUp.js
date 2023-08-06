@@ -90,13 +90,6 @@ function SignUp() {
     }
   }
 
-  async function onEmailVerifyRequest(email : String){
-
-    if(await authContext.emailVerifyRequest(email)){
-      setChkEmail(true)
-    }
-
-  }
   return (
     <div className="bg-gray-10 flex items-center justify-center p-12">
         <div className="w-full flex flex-col ">
