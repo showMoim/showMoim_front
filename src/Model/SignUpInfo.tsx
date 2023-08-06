@@ -1,12 +1,12 @@
 export class SignUpInfo{
 
-    private email:String;
-    private code:String;
-    private nickname:String;
-    private password:String; 
-    private passwordConfirm:String;
+    private email:string;
+    private code:string;
+    private nickname:string;
+    private password:string; 
+    private passwordConfirm:string;
 
-    constructor(email : String, code:String, nickname:String,  password:String, passwordConfirm:String){
+    constructor(email : string, code:string, nickname:string,  password:string, passwordConfirm:string){
         this.email = email;
         this.code = code;
         this.nickname = nickname;
