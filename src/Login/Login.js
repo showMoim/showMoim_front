@@ -41,7 +41,7 @@ function Login() {
             e.preventDefault();
 
             if(authContext.loginVerify(email, password)) {
-
+                
             } else {
                 openModal();
             }
