@@ -56,12 +56,26 @@ export default function AuthProvider({children}){
         return false
     }
 
-    function loginVerify(email, password){
+    async function loginVerify(email, password){
         
-        const response = executeLoginVerifyService({email, password})
+        const response = await executeLoginVerifyService({email, password})
+        // console.log("response: " + JSON.stringify(response));
+        console.log("response: ", response);
 
         if(response.status === 200){
             console.log("로그인 성공");
+
+            let token = response.headers.get("Authorization");
+            console.log("response.headers: " + response.headers);
+            if(token == null) {
+                console.log("token: " + token);
+                //openModal();
+            } else {
+                localStorage.setItem("Authorization", token);
+                
+                //return res.json();
+            }
+
             return true
         } else {
             console.log("로그인 실패");
