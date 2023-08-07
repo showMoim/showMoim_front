@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from "react";
 import { executeSignUpMemberService , executeEmailVerifyRequestService, executeEmailVerifyService, executeLoginVerifyService} from "../Api/MemberApiService";
 import { SignUpInfo }from "../Model/SignUpInfo";
 import DefaultErrorModal from "../Common/DefaultErrorModal";
+import { removeCookie, setCookie } from '../Login/Util/Cookie';
+
 export const AuthContext = createContext()
  
 export const useAuth = () => useContext(AuthContext)
@@ -69,10 +71,11 @@ export default function AuthProvider({children}){
             console.log("response.headers: " + response.headers);
             if(token == null) {
                 console.log("token: " + token);
-                //openModal();
-            } else {
-                localStorage.setItem("Authorization", token);
                 
+            } else {
+                //localStorage.setItem("Authorization", token);
+                //axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data;
+                //setCookie('accessToken', data.token)
                 //return res.json();
             }
 
