@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../Context/AuthContext";
 import Modal from '../Common/Modal';
 import '../css/Login.css';
 
 function Login() {
     const authContext = useAuth();
+    const navigate = useNavigate();
     
     const [modalVisible, setModalVisible] = useState(false);
     const openModal = () => {
@@ -26,9 +27,6 @@ function Login() {
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
-        //console.log('email: ', email);
-        //console.log('password: ', password);
-
         if(email == "") {
             alert("이메일을 입력해주세요!");
             return;
@@ -40,8 +38,10 @@ function Login() {
         if(email != "" && password != "") {
             e.preventDefault();
 
+            navigate("/Main");
+
             if(authContext.loginVerify(email, password)) {
-                
+                navigate("/Main");
             } else {
                 openModal();
             }
