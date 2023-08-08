@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+import { executeEmailVerifyRequestService, executeEmailVerifyService } from "../Api/MemberApiService";
 import "../css/Login.css";
 
 function SignUp() {
@@ -23,33 +24,42 @@ function SignUp() {
   const authCode = "123456";
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //     console.log("useEffect", conPassword)
-  // }, [conPassword])
+  async function emailVerifyRequest (email){
+    const emailInfo = {
+            email
+        }
+
+        const response = await executeEmailVerifyRequestService(emailInfo)
+
+        if(response.status === 200){
+            console.log("이메일 인증 요청 성공")
+            return true
+        }
+        
+        console.log("이메일 인증 요청 실패")
+
+        return false;
+  }
+
+  async function emailVerify(email, code){
+
+    const response = await executeEmailVerifyService({email, code})
+
+    if(response.status === 200){
+        console.log("이메일 인증 성공")
+        return true
+    }
+
+    return false
+}
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
   };
 
   //인증 유효 시간 넣어야 될거같음
-  const onAuthHandler = (e) => {
-    
-    authContext.emailVerifyRequest(email);
-    // fetch("/auth", {
-    //     method: 'POST',
-    //     headers: {
-    //         'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         email: email,
-    //     }).then(res => res.json())
-    //         .then(response => {
-    //             if(response.Authorization == null) {
-    //                 alert("인증에 실패하였습니다. 다시 시도 해주세요.")
-    //             }
-    //             //setChkCode(true);
-    //         })
-    // })
+  const onAuthHandler = (e ) => {
+    emailVerifyRequest(email);
   };
 
   const onCodeHandler = (e) => {
@@ -71,7 +81,7 @@ function SignUp() {
 
   async function checkValidEmail(code){
     setCode(code)
-    return await authContext.emailVerify(email, code)
+    return await emailVerify(email, code)
   };
 
   const checkValidPassword = (pwd, conPwd) => {
