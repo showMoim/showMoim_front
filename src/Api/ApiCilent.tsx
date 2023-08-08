@@ -10,3 +10,10 @@ export const apiClient = axios.create(
         },
     }
 )
+
+//access Token 필요 없는 요청
+export const basicApiClient = axios.create(
+    {
+        baseURL : "http://localhost:8080"
+    }
+)
