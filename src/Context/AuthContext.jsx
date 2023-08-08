@@ -68,6 +68,11 @@ export default function AuthProvider({children}){
             console.log("[loginVerify] 로그인 성공");
             console.log("[loginVerify] 액세스 토큰: ", accessToken);
 
+            if(!accessToken) {
+                console.log("토큰 null");
+                return false;
+            }
+
             return true;
         } catch (e) {
             console.log("로그인 실패");

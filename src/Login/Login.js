@@ -38,9 +38,7 @@ function Login() {
         if(email != "" && password != "") {
             e.preventDefault();
 
-            navigate("/Main");
-
-            if(authContext.loginVerify(email, password)) {
+            if(authContext.loginVerify(email, password) === true) {
                 navigate("/Main");
             } else {
                 openModal();
