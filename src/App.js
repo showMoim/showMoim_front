@@ -6,11 +6,13 @@ import Main from './Main/Main';
 import './App.css';
 import AuthProvider from './Context/AuthContext';
 import { RecoilRoot } from 'recoil';
+import DefaultApiProvider from './Context/DefaultApiContext';
 function App() {
   const isLogin = false;
 
   return (
     <RecoilRoot>
+      <DefaultApiProvider>
       <AuthProvider>
         <Router>
           <Routes>
@@ -25,6 +27,7 @@ function App() {
           </Routes>
         </Router>
       </AuthProvider>
+      </DefaultApiProvider>
     </RecoilRoot>
   );
 }

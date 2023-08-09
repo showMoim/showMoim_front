@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-import { executeEmailVerifyRequestService, executeEmailVerifyService } from "../Api/MemberApiService";
+import { useDefaultApi } from "../Context/DefaultApiContext";
+import { emailVerifyRequestService, executeEmailVerifyService } from "../Api/MemberApiService";
 import "../css/Login.css";
 
 function SignUp() {
   const authContext = useAuth()
-
+  const defaultApiContext = useDefaultApi();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [email, setEmail] = useState("");
@@ -28,17 +29,9 @@ function SignUp() {
     const emailInfo = {
             email
         }
-
-        const response = await executeEmailVerifyRequestService(emailInfo)
-
-        if(response.status === 200){
-            console.log("이메일 인증 요청 성공")
-            return true
-        }
-        
-        console.log("이메일 인증 요청 실패")
-
-        return false;
+      await defaultApiContext.executeDefaultApiService(
+         () => emailVerifyRequestService(emailInfo)
+        );
   }
 
   async function emailVerify(email, code){
