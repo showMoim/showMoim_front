@@ -5,7 +5,7 @@ export const executeSignUpMemberService = (signUpInfo : SignUpInfo) => basicApiC
     return err
 })
 
-export const executeEmailVerifyRequestService = (email : {email : string}) => basicApiClient.post('/api/member/join/email/verify/send', email)
+export const emailVerifyRequestService = (email : {email : string}) => basicApiClient.post('/api/member/join/email/verify/send', email)
 
 export const executeEmailVerifyService = (emailVerifyInfo : {email : string, code : string}) => basicApiClient.post('/api/member/join/email/verify', emailVerifyInfo)
 
