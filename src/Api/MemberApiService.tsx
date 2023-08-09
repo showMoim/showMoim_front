@@ -9,7 +9,5 @@ export const executeEmailVerifyRequestService = (email : {email : string}) => ba
 
 export const executeEmailVerifyService = (emailVerifyInfo : {email : string, code : string}) => basicApiClient.post('/api/member/join/email/verify', emailVerifyInfo)
 
-export const executeLoginVerifyService = (loginVerifyInfo : {email : string, password : string}) => apiClient.post('/api/member/login', loginVerifyInfo).then().catch(err => {
-    return err
-});
+export const executeLoginVerifyService = (loginVerifyInfo : {email : string, password : string}) => apiClient.post('/api/member/login', loginVerifyInfo);
 

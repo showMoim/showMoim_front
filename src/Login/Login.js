@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../Context/AuthContext";
 import Modal from '../Common/Modal';
 import '../css/Login.css';
 
 function Login() {
     const authContext = useAuth();
+    const navigate = useNavigate();
     
     const [modalVisible, setModalVisible] = useState(false);
     const openModal = () => {
@@ -23,11 +24,8 @@ function Login() {
     const onPasswordHandler = (e) => {
         setPassword(e.currentTarget.value);
     }
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
-
-        //console.log('email: ', email);
-        //console.log('password: ', password);
 
         if(email == "") {
             alert("이메일을 입력해주세요!");
@@ -40,8 +38,10 @@ function Login() {
         if(email != "" && password != "") {
             e.preventDefault();
 
-            if(authContext.loginVerify(email, password)) {
-                
+            const authenticated = await authContext.loginVerify(email, password);
+
+            if(authenticated) {
+                navigate("/Main");
             } else {
                 openModal();
             }
