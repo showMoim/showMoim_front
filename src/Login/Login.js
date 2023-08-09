@@ -24,7 +24,7 @@ function Login() {
     const onPasswordHandler = (e) => {
         setPassword(e.currentTarget.value);
     }
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
 
         if(email == "") {
@@ -38,7 +38,9 @@ function Login() {
         if(email != "" && password != "") {
             e.preventDefault();
 
-            if(authContext.loginVerify(email, password) === true) {
+            const authenticated = await authContext.loginVerify(email, password);
+
+            if(authenticated) {
                 navigate("/Main");
             } else {
                 openModal();

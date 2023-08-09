@@ -65,19 +65,19 @@ export default function AuthProvider({children}){
             await executeLoginVerifyService({email, password});
             const accessToken = getCookie(ACCESS_TOKEN_COOKIE);
 
-            console.log("[loginVerify] 로그인 성공");
-            console.log("[loginVerify] 액세스 토큰: ", accessToken);
-
-            if(!accessToken) {
-                console.log("토큰 null");
+            if (!accessToken) {
+                console.log("[loginVerify] 토큰 null");
                 return false;
             }
 
+            console.log("[loginVerify] 로그인 성공");
+            console.log("[loginVerify] 액세스 토큰: ", accessToken);
+
             return true;
         } catch (e) {
-            console.log("로그인 실패");
+            console.log("[loginVerify] 로그인 실패");
             return false;
-       }
+        }
     }
 
     // 새로고침 할때마다 토큰 검증 (테스트용 코드)
