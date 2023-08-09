@@ -89,7 +89,7 @@ export default function AuthProvider({children}){
     // }
 
     return (
-        <AuthContext.Provider value = {{signUp, emailVerifyRequest, emailVerify, loginVerify, username}}>
+        <AuthContext.Provider value = {{signUp, loginVerify, username}}>
             {children}
         </AuthContext.Provider>
     )
