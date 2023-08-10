@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext} from "react";
 import { useRecoilState } from "recoil";
 import {errorState} from "../recoil/error/atoms";
 
@@ -8,17 +8,39 @@ export const useDefaultApi = () => useContext(DefaultApiContext);
 
 export default function DefaultApiProvider({children}){
     const [state, setState] = useRecoilState(errorState)
+    
     async function executeDefaultApiService(func){
         try{
-            const response = await func();
-            if(response.status === 200){
-                setState("200");
-                console.log(
-                    "executeDefaultApiService : 요청 성공"  
-                )
-            }
+            var response = await func();
+            setState(response.state);
+            const configData = response.config;
+            console.log(
+                "Request Start >>>>>  \n"
+                + "url : "  + configData.baseURL + configData.url +"\n"
+                + "method : " + configData.method + "\n"
+                + "headers : " + configData.headers + "\n"
+                + "data : " + configData.data + "\n" 
+                + "          \n" 
+                + "Response Start >>>>>> \n"
+                + "status : " + response.data.status +"\n"
+                + "message : " + response.data.message + "\n"
+                + "data : " + response.data.data
+            )
         }catch(e){
-            setState(e.status);
+            setState(e.response.status);
+            const configData = e.config;
+            console.log(
+                "[ Error ] Request Start >>>>>  \n"
+                + "url : "  + configData.baseURL + configData.url +"\n"
+                + "method : " + configData.method + "\n"
+                + "headers : " + configData.headers + "\n"
+                + "data : " + configData.data + "\n" 
+                + "          \n" 
+                + "[ Error ] Response Start >>>>>> \n"
+                + "error code : " + e.response.status +"\n"
+                + "message : " + e.message + "\n"
+                + "error name : " + e.name
+            );
         }
     }
 
