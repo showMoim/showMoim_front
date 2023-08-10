@@ -1,9 +1,8 @@
 import { SignUpInfo } from "../Model/SignUpInfo";
 import { apiClient , basicApiClient} from "./ApiCilent";
 
-export const executeSignUpMemberService = (signUpInfo : SignUpInfo) => basicApiClient.post('/api/member/join', signUpInfo).then().catch(err => {
-    return err
-})
+export const signUpMemberService = (signUpInfo : SignUpInfo) => basicApiClient.post('/api/member/join', signUpInfo)
+
 
 export const emailVerifyRequestService = (email : {email : string}) => basicApiClient.post('/api/member/join/email/verify/send', email)
 

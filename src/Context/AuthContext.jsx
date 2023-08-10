@@ -1,9 +1,10 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import { executeSignUpMemberService , executeEmailVerifyRequestService, executeEmailVerifyService, executeLoginVerifyService} from "../Api/MemberApiService";
+import { signUpMemberService ,  executeLoginVerifyService} from "../Api/MemberApiService";
 import { SignUpInfo }from "../Model/SignUpInfo";
 import DefaultErrorModal from "../Common/DefaultErrorModal";
 import {getCookie, removeCookie, setCookie} from '../Login/Util/Cookie';
 import {ACCESS_TOKEN_COOKIE, apiClient} from "../Api/ApiCilent";
+import { useDefaultApi } from "../Context/DefaultApiContext";
 
 
 export const AuthContext = createContext()
@@ -11,24 +12,14 @@ export const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
 export default function AuthProvider({children}){
-    
+    const defaultApiContext = useDefaultApi();
     const [username, setUsername] = useState(null)
 
     async function signUp(email, code, nickname, password, passwordConfirm){
-
         const memberInfo = new SignUpInfo(email, code, nickname, password, passwordConfirm);
- 
-        const response = await executeSignUpMemberService(memberInfo)
-
-        if(response.status === 200){
-            console.log("회원가입 성공!")
-            setUsername(nickname)
-            return true
-        }
-
-        console.log("회원가입 실패")
-
-        return false
+        await defaultApiContext.executeDefaultApiService( 
+            () => signUpMemberService(memberInfo)
+            );
     }
 
     

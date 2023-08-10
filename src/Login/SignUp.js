@@ -37,7 +37,7 @@ function SignUp() {
   async function emailVerify(email, code){
 
     await defaultApiContext.executeDefaultApiService(
-      () => EmailVerifyService(email. code)
+      () => EmailVerifyService({email, code})
     );
 }
 

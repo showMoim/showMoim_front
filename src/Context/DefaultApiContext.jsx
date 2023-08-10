@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext} from "react";
 import { useRecoilState } from "recoil";
 import {errorState} from "../recoil/error/atoms";
 
@@ -12,7 +12,6 @@ export default function DefaultApiProvider({children}){
     async function executeDefaultApiService(func){
         try{
             var response = await func();
-            console.log(response);
             setState(response.state);
             const configData = response.config;
             console.log(
@@ -28,7 +27,6 @@ export default function DefaultApiProvider({children}){
                 + "data : " + response.data.data
             )
         }catch(e){
-            console.log(e);
             setState(e.response.status);
             const configData = e.config;
             console.log(
@@ -44,9 +42,6 @@ export default function DefaultApiProvider({children}){
                 + "error name : " + e.name
             );
         }
-    }
-    function loggingService(response){
-        
     }
 
     return (<DefaultApiContext.Provider value = {{executeDefaultApiService}}>
