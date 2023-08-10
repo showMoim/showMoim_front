@@ -13,26 +13,40 @@ export default function DefaultApiProvider({children}){
         try{
             var response = await func();
             console.log(response);
-            if(response.status === 200){
-                setState("200");
-            }
-        }catch(e){
-            setState(e.status);
-        }finally{
+            setState(response.state);
             const configData = response.config;
-                console.log(
-                    "Request Start >>>>>  \n"
-                    + "url : "  + configData.baseURL + configData.url +"\n"
-                    + "method : " + configData.method + "\n"
-                    + "headers : " + configData.headers + "\n"
-                    + "data : " + configData.data + "\n" 
-                    + "          \n" 
-                    + "Response Start >>>>>> \n"
-                    + "status : " + response.data.status +"\n"
-                    + "message : " + response.data.message + "\n"
-                    + "data : " + response.data.data
-                )
+            console.log(
+                "Request Start >>>>>  \n"
+                + "url : "  + configData.baseURL + configData.url +"\n"
+                + "method : " + configData.method + "\n"
+                + "headers : " + configData.headers + "\n"
+                + "data : " + configData.data + "\n" 
+                + "          \n" 
+                + "Response Start >>>>>> \n"
+                + "status : " + response.data.status +"\n"
+                + "message : " + response.data.message + "\n"
+                + "data : " + response.data.data
+            )
+        }catch(e){
+            console.log(e);
+            setState(e.response.status);
+            const configData = e.config;
+            console.log(
+                "[ Error ] Request Start >>>>>  \n"
+                + "url : "  + configData.baseURL + configData.url +"\n"
+                + "method : " + configData.method + "\n"
+                + "headers : " + configData.headers + "\n"
+                + "data : " + configData.data + "\n" 
+                + "          \n" 
+                + "[ Error ] Response Start >>>>>> \n"
+                + "error code : " + e.response.status +"\n"
+                + "message : " + e.message + "\n"
+                + "error name : " + e.name
+            );
         }
+    }
+    function loggingService(response){
+        
     }
 
     return (<DefaultApiContext.Provider value = {{executeDefaultApiService}}>

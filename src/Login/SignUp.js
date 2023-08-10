@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useDefaultApi } from "../Context/DefaultApiContext";
-import { emailVerifyRequestService, executeEmailVerifyService } from "../Api/MemberApiService";
+import { EmailVerifyService, emailVerifyRequestService  } from "../Api/MemberApiService";
 import "../css/Login.css";
 
 function SignUp() {
@@ -36,14 +36,9 @@ function SignUp() {
 
   async function emailVerify(email, code){
 
-    const response = await executeEmailVerifyService({email, code})
-
-    if(response.status === 200){
-        console.log("이메일 인증 성공")
-        return true
-    }
-
-    return false
+    await defaultApiContext.executeDefaultApiService(
+      () => EmailVerifyService(email. code)
+    );
 }
 
   const onEmailHandler = (e) => {
