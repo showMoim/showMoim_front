@@ -10,3 +10,4 @@ export const EmailVerifyService = (emailVerifyInfo : {email : string, code : str
 
 export const executeLoginVerifyService = (loginVerifyInfo : {email : string, password : string}) => apiClient.post('/api/member/login', loginVerifyInfo);
 
+export const executeChangePasswordService = (changePasswordInfo : {email : string, code : string, previousPassword : string, newPassword : string, newPasswordConfirm : string}) => apiClient.post('/api/member/join/change/password', changePasswordInfo)

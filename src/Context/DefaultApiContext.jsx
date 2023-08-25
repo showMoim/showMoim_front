@@ -26,8 +26,10 @@ export default function DefaultApiProvider({children}){
                 + "message : " + response.data.message + "\n"
                 + "data : " + response.data.data
             )
+            return response
         }catch(e){
-            setState(e.response.status);
+            //setState(e.response.status);
+            const e1 = e;
             const configData = e.config;
             console.log(
                 "[ Error ] Request Start >>>>>  \n"
@@ -41,6 +43,7 @@ export default function DefaultApiProvider({children}){
                 + "message : " + e.message + "\n"
                 + "error name : " + e.name
             );
+            return e
         }
     }
 
