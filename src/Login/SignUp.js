@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useDefaultApi } from "../Context/DefaultApiContext";
-import { EmailVerifyService, emailVerifyRequestService  } from "../Api/MemberApiService";
+import { EmailVerifyService, emailVerifyRequestService, executeChangePasswordService  } from "../Api/MemberApiService";
 import "../css/Login.css";
 
 function SignUp() {
@@ -88,6 +88,24 @@ function SignUp() {
     }
   }
 
+  async function onChangePassword(){
+    await defaultApiContext.executeDefaultApiService(
+      () => {
+        executeChangePasswordService(
+          {
+            email,
+            code,
+            //여기에 전 비밀번호 들어가야함
+            'previousPassword' : password,
+            'newPassword' : password,
+            'newPasswordConfirm' : conPassword
+          }
+        )
+      }
+    );
+  
+  }
+
   return (
     <div className="bg-gray-10 flex items-center justify-center p-12">
         <div className="w-full flex flex-col ">
@@ -130,9 +148,10 @@ function SignUp() {
                   if (checkValidPassword(password, conPassword)) {
                     console.log("비밀번호 작성 완료");
                     setChkPassword(true);
-                    
                     if(searchParams.get("cmd") === "findpw") {
-                        navigate("/Login");
+                      //비밀번호 재설정 진행
+                      onChangePassword()
+                      return
                     }
                   }
                 }}

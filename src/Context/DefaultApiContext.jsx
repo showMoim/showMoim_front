@@ -28,7 +28,8 @@ export default function DefaultApiProvider({children}){
             )
             return response
         }catch(e){
-            setState(e.response.status);
+            //setState(e.response.status);
+            const e1 = e;
             const configData = e.config;
             console.log(
                 "[ Error ] Request Start >>>>>  \n"
