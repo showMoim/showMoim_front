@@ -27,7 +27,6 @@ apiClient.interceptors.response.use(
         return response
     },
     error => {
-        console.log(error)
         try{errorLoggingService(error)}catch(e){throw e}
         return error
     }

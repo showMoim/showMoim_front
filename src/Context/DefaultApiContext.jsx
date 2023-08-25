@@ -13,7 +13,9 @@ export default function DefaultApiProvider({children}){
 
         try{
             let response = await func();
-            //setState(response.state);
+            const state = await response.state;
+            //timeout을 줘서 해결하는 방법..????
+            setState(state);
             return response
         }catch(e){
             console.log(e)

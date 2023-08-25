@@ -11,7 +11,7 @@ export const errorLoggingService = (error : any) => {
             + "error code : " + error.response.status +"\n"
             + "error message :"  + error.response.data.message
         );
-    throw new Error(error.response.data.status)
+    return error
 }
 
 
