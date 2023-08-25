@@ -1,5 +1,6 @@
 import axios from "axios"
 import {getCookie} from '../Login/Util/Cookie';
+import { responseLoggingService, errorLoggingService } from "./ApiLoggingService";
 
 export const ACCESS_TOKEN_COOKIE = "SHOWMOIM_ACCESS_TOKEN";
 
@@ -20,9 +21,33 @@ apiClient.interceptors.request.use(config => {
     return config;
 })
 
+apiClient.interceptors.response.use(
+    response => {
+        responseLoggingService(response)
+        return response
+    },
+    error => {
+        console.log(error)
+        try{errorLoggingService(error)}catch(e){throw e}
+        return error
+    }
+)
+
 //access Token 필요 없는 요청
 export const basicApiClient = axios.create(
     {
         baseURL : "http://localhost:8080"
+    }
+)
+
+
+basicApiClient.interceptors.response.use(
+    response => {
+        responseLoggingService(response)
+        return response
+    },
+    error => {
+        try{errorLoggingService(error)}catch(e){throw e}
+        return error
     }
 )

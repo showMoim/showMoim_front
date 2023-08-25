@@ -144,13 +144,13 @@ function SignUp() {
                 </div>
                 <div className="mb-2 text-sm text-red-500">{conPassword.length > 0 && password != conPassword ? "비밀번호가 일치하지 않습니다." : "\u00A0"}</div>
                 <button
-                onClick={() => {
+                onClick={async () => {
                   if (checkValidPassword(password, conPassword)) {
                     console.log("비밀번호 작성 완료");
                     setChkPassword(true);
                     if(searchParams.get("cmd") === "findpw") {
                       //비밀번호 재설정 진행
-                      onChangePassword()
+                      await onChangePassword()
                       return
                     }
                   }
