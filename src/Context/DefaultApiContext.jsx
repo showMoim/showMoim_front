@@ -14,6 +14,9 @@ export default function DefaultApiProvider({children}){
             //서버 error -> response undefined로 넘어옴
             if(response === null || response === 'undefined'){
                 setState(Status.SERVER_ERROR)
+                response = {
+                    state : Status.SERVER_ERROR
+                }
                 return response
             }
             setState(response.state)
