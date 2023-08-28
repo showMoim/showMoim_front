@@ -8,14 +8,16 @@ export const errorLoggingService = (error : any) => {
             + "data : " + configData.data + "\n" 
             + "          \n" 
             + "[ Error ] Response Start >>>>>> \n"
-            + "error code : " + error.response.status +"\n"
-            + "error message :"  + error.response.data.message
+            //+ "error code : " + error.response.status +"\n"
+            //+ "error message :"  + error.response.data.message
+            + "error message : " + error.message
         );
     return error
 }
 
 
 export const responseLoggingService = (response : any) => {
+    console.log(response)
     const configData = response.config;
             console.log(
                 "Request Start >>>>>  \n"
