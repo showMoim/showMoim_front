@@ -1,7 +1,7 @@
 import { createContext, useContext} from "react";
 import { useRecoilState } from "recoil";
 import {errorState} from "../recoil/error/atoms";
-
+import { Status } from "../enum/status";
 export const DefaultApiContext = createContext();
 
 export const useDefaultApi = () => useContext(DefaultApiContext);
@@ -10,25 +10,25 @@ export default function DefaultApiProvider({children}){
     const [state, setState] = useRecoilState(errorState)
     
     async function executeDefaultApiService(func){
+        let response = await func();
+        //서버 error -> response undefined로 넘어옴
+        return await setResponseState(response)
+    }
 
-        try{
-            let response = await func();
-            const state = await response.state;
-            //timeout을 줘서 해결하는 방법..????
-            setState(state);
+    async function setResponseState(response){
+        if(response === undefined){
+            setState(Status.SERVER_ERROR)
+            return {
+                state : Status.SERVER_ERROR
+            }
+        }else{
+            setState(response.status)
             return response
-        }catch(e){
-            console.log(e)
-            const d = e
-            return e
         }
     }
 
-    function saveErrorStatus(status){
-        setState(status)
-    }
 
-    return (<DefaultApiContext.Provider value = {{executeDefaultApiService, saveErrorStatus}}>
+    return (<DefaultApiContext.Provider value = {{executeDefaultApiService}}>
         {children} 
     </DefaultApiContext.Provider> );
 }

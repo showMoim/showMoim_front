@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useDefaultApi } from "../Context/DefaultApiContext";
 import { EmailVerifyService, emailVerifyRequestService, executeChangePasswordService  } from "../Api/MemberApiService";
+import { Status } from "../enum/status";
 import "../css/Login.css";
 
 function SignUp() {
@@ -23,6 +24,7 @@ function SignUp() {
   const [chkInfo, setChkInfo] = useState(false);
 
   const authCode = "123456";
+  const [previousPassword, setPreviousPassword] = useState("");
   const navigate = useNavigate();
 
   async function emailVerifyRequest (email){
@@ -55,6 +57,11 @@ function SignUp() {
     //인증 코드가 맞는지 여부 확인 필요
     setChkCode(true); //일단은 임시로
   };
+
+  const onPreviousPasswordHandler = (e) => {
+    setPreviousPassword(e.currentTarget.value)
+  }
+
   const onPasswordHandler = (e) => {
     setPassword(e.currentTarget.value);
   };
@@ -89,23 +96,28 @@ function SignUp() {
   }
 
   async function onChangePassword(){
-    await defaultApiContext.executeDefaultApiService(
-      () => {
-        executeChangePasswordService(
-          {
-            email,
-            code,
-            //여기에 전 비밀번호 들어가야함
-            'previousPassword' : password,
-            'newPassword' : password,
-            'newPasswordConfirm' : conPassword
-          }
-        )
-      }
-    );
+    const response = await defaultApiContext.executeDefaultApiService(
+      () => executeChangePasswordService(
+        {
+          email,
+          code,
+          previousPassword,
+          'newPassword' : password,
+          'newPasswordConfirm' : conPassword
+        }
+      ))
+
+    await changePasswordNavigator(response)
   
   }
 
+  async function changePasswordNavigator(response){
+    if(await response.status == Status.OK){
+      navigate("/Login")
+    }else{
+      console.log("비밀번호 변경 실패")
+    }
+  }
   return (
     <div className="bg-gray-10 flex items-center justify-center p-12">
         <div className="w-full flex flex-col ">
@@ -134,6 +146,14 @@ function SignUp() {
           )}
           {chkEmail == true && chkPassword == false && chkInfo == false && (
             <div>
+              {
+                searchParams.get("cmd") === "findpw" && (
+                  <div className="mb-6">
+                    <div className="mb-1 text-sm text-gray-600 font-semibold">기존 비밀번호를 입력해주세요.</div>
+                    <input type="password"  onChange={onPreviousPasswordHandler} className="w-full py-2 px-4 bg-gray-100 rounded hover:ring-1 outline-sf-btn-bg mr-3"></input>
+                </div>
+                )
+              }
                 <div className="mb-6">
                     <div className="mb-1 text-sm text-gray-600 font-semibold">비밀번호를 입력해주세요.</div>
                     <input type="password" onChange={onPasswordHandler} value={password} className="w-full py-2 px-4 bg-gray-100 rounded hover:ring-1 outline-sf-btn-bg mr-3"></input>
