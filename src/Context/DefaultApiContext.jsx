@@ -11,16 +11,20 @@ export default function DefaultApiProvider({children}){
     
     async function executeDefaultApiService(func){
         let response = await func();
-            //서버 error -> response undefined로 넘어옴
-            if(response === null || response === 'undefined'){
-                setState(Status.SERVER_ERROR)
-                response = {
-                    state : Status.SERVER_ERROR
-                }
-                return response
+        //서버 error -> response undefined로 넘어옴
+        return await setResponseState(response)
+    }
+
+    async function setResponseState(response){
+        if(response === undefined){
+            setState(Status.SERVER_ERROR)
+            return {
+                state : Status.SERVER_ERROR
             }
-            setState(response.state)
+        }else{
+            setState(response.status)
             return response
+        }
     }
 
 
