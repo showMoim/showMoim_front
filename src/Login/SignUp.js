@@ -38,10 +38,17 @@ function SignUp() {
 
   async function emailVerify(email, code){
 
-    await defaultApiContext.executeDefaultApiService(
+    const response = await defaultApiContext.executeDefaultApiService(
       () => EmailVerifyService({email, code})
     );
-}
+    emailVerifyNavigator(response)
+  }
+
+  async function emailVerifyNavigator(response){
+    if(response.status == Status.OK){
+      setChkEmail(true)
+    }
+  }
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
@@ -136,10 +143,8 @@ function SignUp() {
                     <input type="text" onChange={onCodeHandler} value={code} className="w-full py-2 px-4 bg-gray-100 rounded hover:ring-1 outline-sf-btn-bg" />
                 </div>
                 <div className="mb-2 text-sm text-red-500">{code.length > 0 && authCode != code ? "인증번호가 일치하지 않습니다." : "\u00A0"}</div>
-                <button onClick={() => { console.log("이메일 작성 완료");
-                                        if (checkValidEmail(code)) {
-                                            setChkEmail(true);
-                                        }
+                <button onClick={() => {
+                                          checkValidEmail(code)
                                     }}
                 disabled={code.length < 6} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">다음</button>
             </div>
