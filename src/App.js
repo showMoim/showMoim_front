@@ -7,16 +7,19 @@ import './App.css';
 import AuthProvider from './Context/AuthContext';
 import { RecoilRoot } from 'recoil';
 import DefaultApiProvider from './Context/DefaultApiContext';
+import { useRecoilState } from 'recoil';
+import {errorState} from './recoil/error/atoms';
+import DefaultErrorModal from './Common/DefaultErrorModal';
 function App() {
   const isLogin = false;
-
   return (
     <RecoilRoot>
+      <DefaultErrorModal></DefaultErrorModal>
       <DefaultApiProvider>
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/Login" element={<Login />} /> d
+            <Route path="/Login" element={<Login />} /> 
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Main" element={<Main />} />
             <Route path="/" render={() => (isLogin ? <Navigate to="/Main" /> : <Navigate to="/Login" />)} />
