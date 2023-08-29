@@ -23,12 +23,12 @@ const DefaultErrorModal = () => {
      
      <div className="text-center flex-auto justify-center">
             <h2 className="text-xl font-bold py-4 ">{commentState}</h2>
-            <p className="text-sm text-gray-500 px-8 display-linebreak">{"다시 시도하려면 뒤로가기를 클릭해주세요"}</p>
+            <p className="text-sm text-gray-500 px-8 display-linebreak">{state === Status.SERVER_ERROR ? "네트워크 연결을 확인해주세요" : "다시 시도하려면 뒤로가기를 클릭해주세요"}</p>
      </div>
      
      <div className="p-3  mt-2 text-center space-x-4 md:block">
         <button onClick = {() => {setState(Status.OK)}} className="mb-2 md:mb-0 bg-sf-btn-bg border border-sf-btn-bg px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:sf-btn-bg">뒤로가기</button>
-        <button className="mb-2 md:mb-0 bg-sf-btn-bg border border-sf-btn-bg px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:sf-btn-bg">확인2</button>
+        <button className="mb-2 md:mb-0 bg-sf-btn-bg border border-sf-btn-bg px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:sf-btn-bg">리포트</button>
      </div>
    </div>
  </div>

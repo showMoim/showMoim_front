@@ -17,7 +17,7 @@ export default function DefaultApiProvider({children}){
 
     async function setResponseState(response){
         //서버 에러 났을 경우
-        if(response === undefined || response.response === undefined){
+        if(response === undefined || response.response === undefined && response.status != Status.OK){
             setState(Status.SERVER_ERROR)
             return {
                 state : Status.SERVER_ERROR
