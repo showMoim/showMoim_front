@@ -31,7 +31,7 @@ export const errorCommentState = selector({
             case Status.NICKNAME_INVALID :
                 return "올바르지 않은 닉네임입니다.";
             default : 
-                return "알수 없는 에러가 발생하였습니다.";
+                return "서버 에러가 발생하였습니다.";
         }
     }
  

@@ -16,15 +16,18 @@ export default function DefaultApiProvider({children}){
     }
 
     async function setResponseState(response){
-        if(response === undefined || response.status === undefined){
-            console.log("defaultApiContext")
-            console.log(response)
+        //서버 에러 났을 경우
+        if(response === undefined || response.response === undefined){
             setState(Status.SERVER_ERROR)
             return {
                 state : Status.SERVER_ERROR
             }
         }else{
-            setState(response.status)
+            if(response.status == Status.OK){
+                setState(Status.OK)
+                return response
+            }
+            setState(response.response.data.data)
             return response
         }
     }
