@@ -17,6 +17,8 @@ export default function DefaultApiProvider({children}){
 
     async function setResponseState(response){
         if(response === undefined || response.status === undefined){
+            console.log("defaultApiContext")
+            console.log(response)
             setState(Status.SERVER_ERROR)
             return {
                 state : Status.SERVER_ERROR
