@@ -9,12 +9,10 @@ function Main() {
     // const authenticated = user.status;
     // const [authenticated, setAuthenticated] = useState(false);
 
-    let errorState = useRecoilValue(errorState)
-    console.log("error State 변경 " + errorState)
     useEffect(() => {
         //로그인 체크
         // setAuthenticated(true);
-    }, [errorState]);
+    }, []);
 
     // if (!authenticated) {
     //     return <div>로그인해주세여</div>
