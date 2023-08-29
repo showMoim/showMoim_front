@@ -4,9 +4,14 @@ import { useAuth } from "../Context/AuthContext";
 import { useDefaultApi } from "../Context/DefaultApiContext";
 import { EmailVerifyService, emailVerifyRequestService, executeChangePasswordService  } from "../Api/MemberApiService";
 import { Status } from "../enum/status";
+import Timer from "./Timer.jsx"
 import "../css/Login.css";
 
 function SignUp() {
+  const [second , setSecond] = useState(0)
+  const [isVerifyRequested , setIsVerifyRequested] = useState(false)
+  const [isExpired , setIsExpired] = useState(false)
+
   const authContext = useAuth()
   const defaultApiContext = useDefaultApi();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,12 +33,36 @@ function SignUp() {
   const navigate = useNavigate();
 
   async function emailVerifyRequest (email){
+    setIsExpired(false)
     const emailInfo = {
             email
         }
-      await defaultApiContext.executeDefaultApiService(
-         () => emailVerifyRequestService(emailInfo)
-        );
+    const response = await defaultApiContext.executeDefaultApiService(() => emailVerifyRequestService(emailInfo))
+    emailVerifyRequestNavigator(response)  
+  }
+
+  async function emailVerifyRequestNavigator(response){
+    if(response.status == Status.OK){
+        setSecond(300)
+        setIsVerifyRequested(true)
+        activeTimer()
+    }
+  }
+
+  const activeTimer = () => {
+    const minusSecond = setInterval(
+      () => {
+      setSecond((prev) => {
+          if(prev < 1){
+            setIsVerifyRequested(false)
+            //timer (setInterval) anmount
+            setIsExpired(true)
+            clearInterval(minusSecond)
+            return 0
+          }
+          return --prev
+        })
+    }, 1000)
   }
 
   async function emailVerify(email, code){
@@ -136,18 +165,22 @@ function SignUp() {
                 <div className="mb-6">
                     <div className="mb-1 text-sm text-gray-600 font-semibold">이메일을 입력해주세요.</div>
                     <input type="text" onChange={onEmailHandler} value={email} className="w-3/4 py-2 px-4 bg-gray-100 rounded hover:ring-1 outline-sf-btn-bg mr-3"/>
-                    <button onClick={onAuthHandler} disabled={email.length < 1} className="w-1/5 py-2.5 bg-sf-btn-bg rounded text-sm font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">번호 요청</button>
+                    <button onClick={() => {onAuthHandler()}} disabled={email.length < 1} className="w-1/5 py-2.5 bg-sf-btn-bg rounded text-sm font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">번호 요청</button>
                 </div>
                 <div className="mb-3">
                     <div className="mb-1 text-sm text-gray-600 font-semibold">인증코드를 입력해주세요.</div>
                     <input type="text" onChange={onCodeHandler} value={code} className="w-full py-2 px-4 bg-gray-100 rounded hover:ring-1 outline-sf-btn-bg" />
+                    {isVerifyRequested && <Timer second = {second}></Timer>}
+                    {isExpired && <div className="mb-2 text-sm text-red-500">인증 요청 기간이 만료되었습니다.</div>}
                 </div>
                 <div className="mb-2 text-sm text-red-500">{code.length > 0 && authCode != code ? "인증번호가 일치하지 않습니다." : "\u00A0"}</div>
                 <button onClick={() => {
                                           checkValidEmail(code)
                                     }}
-                disabled={code.length < 6} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">다음</button>
+                disabled={code.length < 6 || !isVerifyRequested} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">다음</button>
+                
             </div>
+            
           )}
           {chkEmail == true && chkPassword == false && chkInfo == false && (
             <div>
@@ -171,13 +204,13 @@ function SignUp() {
                 <button
                 onClick={async () => {
                   if (checkValidPassword(password, conPassword)) {
-                    console.log("비밀번호 작성 완료");
-                    setChkPassword(true);
                     if(searchParams.get("cmd") === "findpw") {
                       //비밀번호 재설정 진행
                       await onChangePassword()
                       return
                     }
+                    setChkPassword(true);
+                    
                   }
                 }}
                 disabled={!checkValidPassword(password, conPassword)} className="py-4 bg-sf-btn-bg w-full rounded font-bold text-white hover:bg-sf-btn-bg disabled:bg-gray-300 disabled:text-gray-400">{searchParams.get("cmd") === "signup" ? "다음" : "완료"}</button>
