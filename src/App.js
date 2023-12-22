@@ -10,6 +10,7 @@ import DefaultApiProvider from './Context/DefaultApiContext';
 import { useRecoilState } from 'recoil';
 import {errorState} from './recoil/error/atoms';
 import DefaultErrorModal from './Common/DefaultErrorModal';
+import HomePage from './pages/home/HomePage';
 function App() {
   const isLogin = false;
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/Login" element={<Login />} /> 
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Main" element={<Main />} />
+            <Route path="/home" element={<HomePage />} />
             <Route path="/" render={() => (isLogin ? <Navigate to="/Main" /> : <Navigate to="/Login" />)} />
             {/* <Route
                 path="/login"
