@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { errorState } from '../recoil/error/atoms';
 import { Status } from '../enum/status';
+import Layout from "./Layout"
 import DefaultErrorModal from '../Common/DefaultErrorModal';
 function Main() {
     // const user = userRecoilState(userState);
@@ -22,8 +23,9 @@ function Main() {
     return (
         <div className="bg-gray-10 ">
             <div className="flex justify-center h-screen w-screen items-center">
-                메인페이지 영역
+                <Layout />
             </div>
+            
             {errorState != Status.OK && <DefaultErrorModal></DefaultErrorModal>}
         </div>
     )

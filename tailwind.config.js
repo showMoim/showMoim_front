@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         'sf-font' : '#F43347', //쑈모임 폰트
         'sf-btn-bg' : '#FA5273', //쑈모임 버튼(뒷배경)
+        'sf-btn-bg-1' : '#ff99a1', //쑈모임 버튼(뒷배경-1)
         'sf-btn' : '#FF3F53' //쑈모임 버튼(흰배경)
     }
       }
