@@ -41,63 +41,6 @@ function Open() {
         return;
     }
     if(true) {
-        // e.preventDefault();
-        alert("good")
-        // const authenticated = await authContext.loginVerify(email, password);
-
-        // if(authenticated) {
-        //     navigate("/Main");
-        // } else {
-        //     openModal();
-        // }
-        
-        // fetch("/login", {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         email: email,
-        //         password: password
-        //     }).then(res => {
-        //             let token = res.headers.get("Authorization");
-        //             if(token == null) {
-        //                 openModal();
-        //             } else {
-        //                    localStorage.setItem("Authorization", token);
-        //                    setCookie("refreshToken", res.payload.)
-        //                    return res.json();
-        //              }
-        //        })
-
-        // })
-
-        // let data = {
-        //     email: email,
-        //     password: password,
-        // }
-
-        // axios.post('http://localhost:8080/api/member/login', data).then(response => {
-        //     console.log(response.status)
-        //     // const { accessToken } = response.data.acess_token;
-        //     // const { refreshToken } = response.data.refresh_token;
-
-        //     // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        //     // axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-    
-        //     // setCookie("refreshToken", refreshToken)
-        //     // localStorage.setItem("accessToken", accessToken)
-    
-        // }).catch(error => {
-        //     // ... 에러 처리
-        //     openModal();
-        // });
-
-        //로그아웃시
-        //removeCookie("accessToken");
-        //localStorage.removeItem("refreshToken");
-
-        //openModal(); //임시로
     }
 }
 
